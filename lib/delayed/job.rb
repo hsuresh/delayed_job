@@ -112,8 +112,8 @@ module Delayed
     
       priority = args.first || 0
       run_at   = args[1]
-
-      Job.create(:payload_object => object, :priority => priority.to_i, :run_at => run_at)
+      parent   = args[2]
+      Job.create(:payload_object => object, :priority => priority.to_i, :run_at => run_at, :parent => parent.id)
     end
 
     # Find a few candidate jobs to run (in case some immediately get locked by others).

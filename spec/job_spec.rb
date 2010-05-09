@@ -342,4 +342,17 @@ describe Delayed::Job do
 
   end
   
+  context "aware of parent" do
+    before(:each) do
+      @story = Story.create :text => "..."
+    end
+
+    it "should load the parent object" do
+      job = Delayed::Job.enqueue(0, Date.today + 1, @story) do
+      end
+      job.parent.should == @story.id
+      @story.reload
+      @story.jobs.count.should == 1
+    end
+  end
 end

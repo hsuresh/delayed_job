@@ -24,6 +24,7 @@ ActiveRecord::Schema.define do
     table.datetime :locked_at
     table.string   :locked_by
     table.datetime :failed_at
+    table.integer   :parent
     table.timestamps
   end
 
@@ -36,6 +37,7 @@ end
 
 # Purely useful for test cases...
 class Story < ActiveRecord::Base
+  has_many :jobs, :class_name => "Delayed::Job", :foreign_key => :parent
   def tell; text; end       
   def whatever(n, _); tell*n; end
   
